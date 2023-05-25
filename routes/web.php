@@ -36,6 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/shopping-list/create',[ShoppingListController::class, 'create'])->name('shopping-list.create');
+Route::resource('/shopping-list',ShoppingListController::class);
 
 require __DIR__.'/auth.php';

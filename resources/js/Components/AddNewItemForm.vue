@@ -1,21 +1,22 @@
 <template lang="">
-    <div class="flex w-3/4 m-auto justify-center">
-        <div class="w-1/2">
+    <div class="flex w-full justify-evenly m-auto">
+        <div class="w-2/5">
             <div class="font-bold font-medium">Custom Item</div>
-            <div class="flex justify-stretch w-full">
+            <div class="flex justify-stretch w-full h-10">
                 <TextInput class="w-3/4" v-model="customItem"></TextInput>
-                <PrimaryButton @click="addCustom" class="w/1/4">Add</PrimaryButton>
+                <PrimaryButton @click="addCustom" class="w-1/4">Add</PrimaryButton>
             </div>
         </div>
-        <div class="w-1/2">
+        <div class="w-2/5">
             <div class="font-bold font-medium">Add from List</div>
-            <div class="flex justify-stretch w-full">
+            <div class="flex justify-stretch w-full h-10">
                 <select class="w-3/4" v-model="selected" @change="handleChange($event)">
                     <option v-for="option in options" :value="option">{{ option }}</option>
                 </select>
-                <PrimaryButton @click="addOption" class="w/1/4">Add</PrimaryButton>
+                <PrimaryButton @click="addOption" class="w-1/4">Add</PrimaryButton>
             </div>
         </div>
+        <SecondaryButton v-if="list.length" @click="saveList" class="self-end justify-end">Save</SecondaryButton>
     </div>
     <shopping-list @removeItem="removeItem" :list="list"></shopping-list>
 </template>
@@ -23,9 +24,10 @@
 import ShoppingList from "./ShoppingList.vue"
 import { ref } from "vue"
 import PrimaryButton from "./PrimaryButton.vue";
-import TextInput from "./TextInput.vue"
+import SecondaryButton from "./SecondaryButton.vue";
+import TextInput from "./TextInput.vue";
     const customItem = ref('');
-    const options = ref(['Bread', 'Cheese', 'Milk', 'Crisps', 'Chocolate'])
+    const options = ref(['Bread', 'Cheese', 'Milk', 'Crisps', 'Chocolate']);
     const selected = ref(null);
     const list = ref([]);
 
@@ -43,6 +45,12 @@ import TextInput from "./TextInput.vue"
 
     function handleChange(e) {
         selected.value = e.target.value;
+    }
+
+    function saveList() {
+        axios.post('/shopping-list', {list: list.value}).then((response) => {
+            console.log(response.data)
+        })
     }
 
 

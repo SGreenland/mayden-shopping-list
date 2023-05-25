@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ShoppingList extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'items' => 'array'
+    ];
+
+    protected $fillable = ['user_id', 'items'];
 }

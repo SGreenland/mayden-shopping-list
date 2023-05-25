@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Throwable;
+use Inertia\Inertia;
 use App\Models\ShoppingList;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
 
 class ShoppingListController extends Controller
 {
@@ -31,6 +33,24 @@ class ShoppingListController extends Controller
     public function store(Request $request)
     {
         //
+        if(!auth()->user()) abort(403);
+
+        Log::debug($request->list);
+
+
+        $request->validate(['list' => 'array']);
+        try {
+            ShoppingList::create([
+                'user_id' => auth()->user()->id,
+                'items' => $request->list,
+            ]);
+            return response()->json('Success', 200);
+        }
+        catch (Throwable $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+
+
     }
 
     /**
