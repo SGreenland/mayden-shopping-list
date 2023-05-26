@@ -16,6 +16,9 @@ class ShoppingListController extends Controller
     public function index()
     {
         //
+        $userShoppingLists = ShoppingList::where('user_id', auth()->user()->id)->get();
+
+        return Inertia::render('shoppingList/Index', ['savedLists' => $userShoppingLists]);
     }
 
     /**
@@ -33,10 +36,7 @@ class ShoppingListController extends Controller
     public function store(Request $request)
     {
         //
-        if(!auth()->user()) abort(403);
-
-        Log::debug($request->list);
-
+        if(!auth()->user()) return redirect('/login');
 
         $request->validate(['list' => 'array']);
         try {

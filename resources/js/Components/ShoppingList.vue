@@ -10,8 +10,12 @@
 <script setup>
     import Checkbox from './Checkbox.vue';
     import DangerButton from './DangerButton.vue';
-    defineProps(['list'])
+    const props = defineProps(['list'])
     defineEmits(['removeItem']);
+
+
+
+
 </script>
 <style lang="">
 

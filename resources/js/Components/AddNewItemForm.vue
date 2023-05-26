@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="flex w-full justify-evenly m-auto">
+    <div class="flex w-3/4 justify-between m-auto">
         <div class="w-2/5">
             <div class="font-bold font-medium">Custom Item</div>
             <div class="flex justify-stretch w-full h-10">
@@ -16,20 +16,32 @@
                 <PrimaryButton @click="addOption" class="w-1/4">Add</PrimaryButton>
             </div>
         </div>
-        <SecondaryButton v-if="list.length" @click="saveList" class="self-end justify-end">Save</SecondaryButton>
+        <SecondaryButton v-if="list.length" @click="saveList" class="self-end justify-end h-10">Save</SecondaryButton>
     </div>
     <shopping-list @removeItem="removeItem" :list="list"></shopping-list>
 </template>
 <script setup>
 import ShoppingList from "./ShoppingList.vue"
-import { ref } from "vue"
+import { ref, onMounted, onUnmounted } from "vue"
 import PrimaryButton from "./PrimaryButton.vue";
 import SecondaryButton from "./SecondaryButton.vue";
 import TextInput from "./TextInput.vue";
     const customItem = ref('');
-    const options = ref(['Bread', 'Cheese', 'Milk', 'Crisps', 'Chocolate']);
+    const options = ref(['Bread', 'Cheese', 'Milk', 'Eggs', 'Crisps', 'Chocolate']);
     const selected = ref(null);
     const list = ref([]);
+
+    onMounted(() => {
+        //if existing list stored then set list value
+       if(JSON.parse(localStorage.getItem('currentList')).length){
+        list.value = JSON.parse(localStorage.getItem('currentList'))
+       }
+    })
+
+    onUnmounted(() => {
+        //persist state to localStorage
+        localStorage.setItem('currentList', JSON.stringify(list.value));
+    })
 
     function addCustom() {
         list.value.push({name: customItem.value, checked: false});
@@ -50,6 +62,8 @@ import TextInput from "./TextInput.vue";
     function saveList() {
         axios.post('/shopping-list', {list: list.value}).then((response) => {
             console.log(response.data)
+        }).catch(error => {
+            alert('Error: ' + error.response.data);
         })
     }
 
