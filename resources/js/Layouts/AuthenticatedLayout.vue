@@ -36,7 +36,7 @@ const showingNavigationDropdown = ref(false);
                                     Create New List
                                 </NavLink>
                                 <NavLink :href="route('shopping-list.index')" :active="route().current('shopping-list.index')">
-                                    View Saved Lists
+                                    My Saved Lists
                                 </NavLink>
                             </div>
                         </div>

@@ -1,22 +1,22 @@
 <template lang="">
-    <div class="flex w-3/4 justify-between m-auto">
-        <div class="w-2/5">
+    <div class="grid mt-7 lg:grid-cols-2 w-3/4 gap-2 grid-cols-1 justify-between m-auto">
+        <div class="w-full">
             <div class="font-bold font-medium">Custom Item</div>
             <div class="flex justify-stretch w-full h-10">
-                <TextInput class="w-3/4" v-model="customItem"></TextInput>
-                <PrimaryButton @click="addCustom" class="w-1/4">Add</PrimaryButton>
+                <TextInput @keyup.enter="addCustom"  class="w-4/5" v-model="customItem"></TextInput>
+                <PrimaryButton @click="addCustom" class="w-1/5 justify-center">Add</PrimaryButton>
             </div>
         </div>
-        <div class="w-2/5">
+        <div class="w-full">
             <div class="font-bold font-medium">Add from List</div>
             <div class="flex justify-stretch w-full h-10">
-                <select class="w-3/4" v-model="selected" @change="handleChange($event)">
+                <select class="w-4/5" v-model="selected" @change="handleChange($event)">
                     <option v-for="option in options" :value="option">{{ option }}</option>
                 </select>
-                <PrimaryButton @click="addOption" class="w-1/4">Add</PrimaryButton>
+                <PrimaryButton @click="addOption" class="w-1/5 justify-center">Add</PrimaryButton>
             </div>
         </div>
-        <SecondaryButton v-if="list.length" @click="saveList" class="self-end justify-end h-10">Save</SecondaryButton>
+        <SecondaryButton v-if="list.length" @click="saveList" class="absolute right-0 top-16 mt-2 mr-3 h-10">Save</SecondaryButton>
     </div>
     <shopping-list @removeItem="removeItem" :list="list"></shopping-list>
 </template>
@@ -66,8 +66,6 @@ import TextInput from "./TextInput.vue";
             alert('Error: ' + error.response.data);
         })
     }
-
-
 </script>
 <style lang="">
 
