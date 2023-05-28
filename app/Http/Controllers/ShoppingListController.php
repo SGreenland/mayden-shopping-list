@@ -36,7 +36,7 @@ class ShoppingListController extends Controller
     public function store(Request $request)
     {
         //
-        if(!auth()->user()) return redirect('/login');
+        if(!auth()->user()) abort(403, 'You must be logged in to save a shopping list');
 
         $request->validate(['list' => 'array']);
         try {
