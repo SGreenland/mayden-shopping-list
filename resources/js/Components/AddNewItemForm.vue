@@ -92,7 +92,7 @@ const list = ref([]);
 const displayModal = ref(false);
 const modalText = ref("");
 const budget = ref(null);
-const totalCost = ref(null);
+const totalCost = ref(0);
 
 const props = defineProps(["savedList", "id"]);
 
