@@ -67,7 +67,7 @@
         @removeItem="removeItem"
         :list="props.savedList ? props.savedList : list"
     ></shopping-list>
-    Total: {{ `£${totalCost.toFixed(2)}`}}
+    Total: {{ getTotal() }}
 </template>
 <script setup>
 import ShoppingList from "./ShoppingList.vue";
@@ -92,7 +92,7 @@ const list = ref([]);
 const displayModal = ref(false);
 const modalText = ref("");
 const budget = ref(null);
-const totalCost = ref(0);
+const totalCost = ref(null);
 
 const props = defineProps(["savedList", "id"]);
 
@@ -123,9 +123,11 @@ watch(
             totalCost.value = list.value
                 .map((i) => i.price)
                 .reduce((total, curr) => {
-                    if(curr == "n/a") return total;
-                    else return total + curr;
+                    return total + curr;
                 });
+        }
+        else {
+            totalCost.value = 0
         }
         //if budget set and totalcost exceeds it then alert user
         if (budget.value && totalCost.value > budget.value) {
@@ -139,7 +141,7 @@ watch(
 function addCustom() {
     list.value.push({
         name: customItem.value,
-        price: "n/a",
+        price: 0,
         checked: false,
         id: list.value.length,
     });
@@ -201,6 +203,14 @@ function updateListOrder(updatedList) {
 
 function updateChecked(checked, index) {
     list.value[index].checked = checked;
+}
+
+function getTotal() {
+    if(totalCost.value){
+        console.log(totalCost.value)
+        return `£${totalCost.value.toFixed(2)}`
+    }
+    else return '£0.00'
 }
 </script>
 <style lang=""></style>
