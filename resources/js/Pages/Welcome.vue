@@ -7,7 +7,7 @@ import { Head, Link } from '@inertiajs/vue3';
     <div
         class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white"
     >
-    <h1 class="text-xl font-bold self-start p-6">Welcome to My Shopping list app, click 'Create new list' to get started or sign up for an account!</h1>
+    <h1 class="text-xl font-bold self-start p-6">Welcome to my shopping list app, click 'Create new list' to get started or sign up for an account!</h1>
     </div>
 </template>
 

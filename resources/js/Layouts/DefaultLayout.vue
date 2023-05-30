@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
@@ -8,6 +8,7 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import { Link } from "@inertiajs/vue3";
 
 const showingNavigationDropdown = ref(false);
+
 </script>
 
 <template>
@@ -218,15 +219,16 @@ const showingNavigationDropdown = ref(false);
             </header>
 
             <!-- Page Content -->
-            <main v-if="$page.props.auth.user">
-                <slot />
-            </main>
             <div
-                v-else
+                v-if="route().current('login') || route().current('register')"
                 class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg m-auto"
             >
                 <slot />
             </div>
+            <main v-else>
+                <slot />
+            </main>
+
         </div>
     </div>
 </template>

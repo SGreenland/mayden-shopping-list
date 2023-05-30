@@ -56,14 +56,10 @@ class ShoppingListController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(ShoppingList $shoppingList)
     {
         //
-        $shoppingList =  ShoppingList::find($id);
-
-        $shoppingListData = $shoppingList->items;
-
-        return Inertia::render('shoppingList/Show', ['list' => $shoppingListData]);
+        return Inertia::render('shoppingList/Show', ['list' => $shoppingList->items, 'id' => $shoppingList->id]);
     }
 
     /**
@@ -72,6 +68,8 @@ class ShoppingListController extends Controller
     public function edit(ShoppingList $shoppingList)
     {
         //
+
+        return Inertia::render('shoppingList/Edit', ['list' => $shoppingList->items, 'id' => $shoppingList->id]);
     }
 
     /**
@@ -80,6 +78,16 @@ class ShoppingListController extends Controller
     public function update(Request $request, ShoppingList $shoppingList)
     {
         //
+        $request->validate(['list' => 'array']);
+
+        try {
+            $shoppingList->update(['items' => $request->list]);
+            return response(200);
+        }
+        catch (Throwable $e){
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+
     }
 
     /**
@@ -88,5 +96,12 @@ class ShoppingListController extends Controller
     public function destroy(ShoppingList $shoppingList)
     {
         //
+        try {
+            $shoppingList->delete();
+            return response(200);
+        }
+        catch (Throwable $e){
+            return response()->json($e->getMessage(), $e->getCode());
+        }
     }
 }
