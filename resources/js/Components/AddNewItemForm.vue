@@ -67,6 +67,7 @@
         @removeItem="removeItem"
         :list="props.savedList ? props.savedList : list"
     ></shopping-list>
+    Total: {{ `£${totalCost.toFixed(2)}`}}
 </template>
 <script setup>
 import ShoppingList from "./ShoppingList.vue";
@@ -77,12 +78,14 @@ import SecondaryButton from "./SecondaryButton.vue";
 import TextInput from "./TextInput.vue";
 const customItem = ref("");
 const options = ref([
-    { name: "Bread", price: 1.2 },
-    { name: "Cheese", price: 2.0 },
-    { name: "Milk", price: 0.8 },
-    { name: "Eggs", price: 2.5 },
-    { name: "Crisps", price: 2.2 },
-    { name: "Chocolate", price: 1.7 },
+    { name: "Bread", price: 1.20 },
+    { name: "Cheese", price: 2.00 },
+    { name: "Milk", price: 0.80 },
+    { name: "Eggs", price: 2.50 },
+    { name: "Crisps", price: 2.20 },
+    { name: "Chocolate", price: 1.70 },
+    { name: "Cereal", price: 2.20},
+    { name: "Ice Cream", price: 3.00},
 ]);
 const selected = ref(null);
 const list = ref([]);
